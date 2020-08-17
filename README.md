@@ -30,7 +30,7 @@
 
 ### Association
 
-- has_many   :buys
+- has_one   :pay
 - belongs_to :user
 
 ## pays テーブル
@@ -43,6 +43,8 @@
 ### Association
 
 - has_one   :address
+- belongs_to :user
+- belongs_to :item
 
 ## addresses テーブル
 | Colum                  | Type         | options                        |
