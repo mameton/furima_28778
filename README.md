@@ -26,6 +26,7 @@
 | image                  | string       | null: false                    |
 | name                   | string       | null: false                    |
 | text                   | text         | null: false                    |
+| category               | integer      | null: false                    |
 | price                  | integer      | null: false                    |
 | condition              | integer      | null: false                    |
 | postage                | integer      | null: false                    |
