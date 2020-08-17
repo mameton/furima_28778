@@ -47,7 +47,7 @@
 ## addresses テーブル
 | Colum                  | Type         | options                        |
 | ---------------------- | ------------ | ------------------------------ |
-| pays                   | references   | null: false, foreign_key: true |
+| pay                    | references   | null: false, foreign_key: true |
 | post_number            | string       | null: false                    |
 | city                   | string       | null: false                    |
 | address                | string       | null: false                    |
