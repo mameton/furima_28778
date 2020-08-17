@@ -17,7 +17,7 @@
 ### Association
 
 - has_many :items
-- has_many :buys
+- has_many :pays
 
 ## items テーブル
 | Colum                  | Type         | options                        |
@@ -27,10 +27,10 @@
 | name                   | string       | null: false                    |
 | text                   | text         | null: false                    |
 | price                  | integer      | null: false                    |
-| condition              |              |                                |
-| postage                |              |                                |
-| exhibitor_prefecture   |              |                                |
-| days                   |              |                                |
+| condition              | integer      | null: false                    |
+| postage                | integer      | null: false                    |
+| exhibitor_prefecture   | integer      | null: false                    |
+| days                   | integer      | null: false                    |
 
 ### Association
 
@@ -55,7 +55,7 @@
 | ---------------------- | ------------ | ------------------------------ |
 | pay                    | references   | null: false, foreign_key: true |
 | post_number            | string       | null: false                    |
-| buyer_prefecture       |              |                                |
+| buyer_prefecture       | integer      | null: false                    |
 | city                   | string       | null: false                    |
 | address                | string       | null: false                    |
 | building_name          | string       |                                |
@@ -63,4 +63,4 @@
 
 ### Association
 
-- belongs_to :pays
+- belongs_to :pay
