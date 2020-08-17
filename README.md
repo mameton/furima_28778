@@ -27,6 +27,10 @@
 | name                   | string       | null: false                    |
 | text                   | text         | null: false                    |
 | price                  | integer      | null: false                    |
+| condition              |              |                                |
+| postage                |              |                                |
+| exhibitor_prefecture   |              |                                |
+| days                   |              |                                |
 
 ### Association
 
@@ -51,6 +55,7 @@
 | ---------------------- | ------------ | ------------------------------ |
 | pay                    | references   | null: false, foreign_key: true |
 | post_number            | string       | null: false                    |
+| buyer_prefecture       |              |                                |
 | city                   | string       | null: false                    |
 | address                | string       | null: false                    |
 | building_name          | string       |                                |
