@@ -48,6 +48,11 @@ describe User do
         @user.valid?
         expect(@user.errors.full_messages).to include("Email can't be blank")
       end
+      it 'emailに@がない' do
+        @user.email = 'aaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Email is invalid')
+      end
       it 'emailが重複している' do
         @user.save
         another_user = FactoryBot.build(:user)
@@ -66,10 +71,15 @@ describe User do
         @user.valid?
         expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
       end
-      it 'passwordが半角英数字ではない' do
+      it 'passwordが半角英字ではない' do
         @user.password = 'password'
         @user.password_confirmation = 'password'
-        expect(@user.errors.full_messages).to include('Password is invalid. Input half-width characters.')
+        expect(@user.errors.full_messages).to include('Password is invalid')
+      end
+      it 'passwordが半角数字ではない' do
+        @user.password = '000000'
+        @user.password_confirmation = '000000'
+        expect(@user.errors.full_messages).to include('Password is invalid')
       end
       it 'passwordがあってもpasswsord_confrimationが空' do
         @user.password_confirmation = ''
@@ -79,32 +89,32 @@ describe User do
       it 'first_nameが空' do
         @user.first_name = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name can't be blank", 'First name is invalid. Input full-width characters.')
+        expect(@user.errors.full_messages).to include("First name can't be blank")
       end
       it 'first_nameが全角ではない' do
-        @user.first_name = ''
+        @user.first_name = 'aaaaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include('First name is invalid. Input full-width characters.')
+        expect(@user.errors.full_messages).to include('First name is invalid')
       end
       it 'last_nameが空' do
         @user.last_name = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include("Last name can't be blank", 'Last name is invalid. Input full-width characters.')
+        expect(@user.errors.full_messages).to include("Last name can't be blank")
       end
       it 'last_nameが全角ではない' do
         @user.last_name = 'aaaaaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Last name is invalid. Input full-width characters.')
+        expect(@user.errors.full_messages).to include('Last name is invalid')
       end
       it 'first_name_phoneticが空' do
         @user.first_name_phonetic = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name phonetic can't be blank", 'First name phonetic is invalid. Input full-width katakana characters.')
+        expect(@user.errors.full_messages).to include("First name phonetic can't be blank")
       end
       it 'first_name_phoneticが全角カタカナではない' do
         @user.first_name_phonetic = 'aaaaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include('First name phonetic is invalid. Input full-width katakana characters.')
+        expect(@user.errors.full_messages).to include('First name phonetic is invalid')
       end
       it 'last_name_phoneticが空' do
         @user.last_name_phonetic = ''
@@ -114,7 +124,7 @@ describe User do
       it 'last_name_phoneticが全角カタカナではない' do
         @user.last_name_phonetic = 'aaaaaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Last name phonetic is invalid. Input full-width katakana characters.')
+        expect(@user.errors.full_messages).to include('Last name phonetic is invalid')
       end
       it 'birthdayが空' do
         @user.birthday = ''

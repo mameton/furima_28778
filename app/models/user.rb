@@ -7,12 +7,20 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :name, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :first_name_phonetic, presence: true
+  validates :last_name_phonetic, presence: true
   validates :birthday, presence: true
-  with_options presence: true do
-    validates :password, format: { with: /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i, message: 'is invalid. Input half-width characters.' }
-    validates :first_name, format: { with: /\A[ぁ-んァ-ン一-龥]/, message: 'is invalid. Input full-width characters.' }
-    validates :last_name, format: { with: /\A[ぁ-んァ-ン一-龥]/, message: 'is invalid. Input full-width characters.' }
-    validates :first_name_phonetic, format: { with: /\A[ァ-ヶー－]+\z/, message: 'is invalid. Input full-width katakana characters.' }
-    validates :last_name_phonetic, format: { with: /\A[ァ-ヶー－]+\z/, message: 'is invalid. Input full-width katakana characters.' }
-  end
+
+  PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
+  validates_format_of :password, with: PASSWORD_REGEX
+
+  NAME_REGEX = /\A[ぁ-んァ-ン一-龥]+\z/.freeze
+  validates_format_of :first_name, with: NAME_REGEX
+  validates_format_of :last_name, with: NAME_REGEX
+
+  NAME_PHOTNETIC_REGEX = /\A[ァ-ヶー－]+\z/.freeze
+  validates_format_of :first_name_phonetic, with: NAME_PHOTNETIC_REGEX
+  validates_format_of :last_name_phonetic, with: NAME_PHOTNETIC_REGEX
 end
