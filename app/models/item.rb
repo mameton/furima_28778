@@ -1,6 +1,12 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to_active_hash :category, :condition, :postage, :exhibitor_prefecture, :days
+  belongs_to_active_hash :category
+  belongs_to_active_hash :condition
+  belongs_to_active_hash :postage
+  belongs_to_active_hash :exhibitor_prefecture
+  belongs_to_active_hash :days
+
+
 
   validates :image, :name, :text, :category, :price, :condition, :postage, :exhibitor_prefecture, :days, presence: true
 
