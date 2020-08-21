@@ -74,11 +74,13 @@ describe User do
       it 'passwordが半角英字ではない' do
         @user.password = 'password'
         @user.password_confirmation = 'password'
+        @user.valid?
         expect(@user.errors.full_messages).to include('Password is invalid')
       end
       it 'passwordが半角数字ではない' do
         @user.password = '000000'
         @user.password_confirmation = '000000'
+        @user.valid?
         expect(@user.errors.full_messages).to include('Password is invalid')
       end
       it 'passwordがあってもpasswsord_confrimationが空' do
