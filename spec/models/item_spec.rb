@@ -68,6 +68,31 @@ describe Item do
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be less than 9999999')
       end
+      it 'category_idが1のとき' do
+        @item.category_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category must be other than 1")
+      end
+      it 'condition_idが1のとき' do
+        @item.condition_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Condition must be other than 1")
+      end
+      it 'days_idが1のとき' do
+        @item.days_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Days must be other than 1")
+      end
+      it 'exhibitor_prefecture_idが1のとき' do
+        @item.exhibitor_prefecture_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Exhibitor prefecture must be other than 1")
+      end
+      it 'postage_idが1のとき' do
+        @item.postage_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Postage must be other than 1")
+      end
     end
   end
 end
