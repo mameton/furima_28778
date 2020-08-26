@@ -26,7 +26,7 @@ describe Item do
       it 'category_idが空' do
         @item.category_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Category can't be blank", "Category is not a number")
+        expect(@item.errors.full_messages).to include("Category can't be blank", 'Category is not a number')
       end
       it 'priceが空' do
         @item.price = ''
@@ -36,27 +36,37 @@ describe Item do
       it 'condition_idが空' do
         @item.condition_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Condition can't be blank", "Condition is not a number")
+        expect(@item.errors.full_messages).to include("Condition can't be blank", 'Condition is not a number')
       end
       it 'postage_idが空' do
         @item.postage_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Postage can't be blank", "Postage is not a number")
+        expect(@item.errors.full_messages).to include("Postage can't be blank", 'Postage is not a number')
       end
       it 'exhibitor_prefecture_idが空' do
         @item.exhibitor_prefecture_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Exhibitor prefecture can't be blank", "Exhibitor prefecture is not a number")
+        expect(@item.errors.full_messages).to include("Exhibitor prefecture can't be blank", 'Exhibitor prefecture is not a number')
       end
       it 'days_idが空' do
         @item.days_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Days can't be blank", "Days is not a number")
+        expect(@item.errors.full_messages).to include("Days can't be blank", 'Days is not a number')
       end
       it 'ユーザーが紐付いていない' do
         @item.user = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("User must exist")
+        expect(@item.errors.full_messages).to include('User must exist')
+      end
+      it 'priceが300円以下' do
+        @item.price = '200'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
+      end
+      it 'priceが9999999円以上' do
+        @item.price = '10000000'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price must be less than 9999999')
       end
     end
   end
