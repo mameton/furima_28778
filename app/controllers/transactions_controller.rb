@@ -1,38 +1,96 @@
 class TransactionsController < ApplicationController
+  before_action :move_to_index
+  before_action :current_user
+  require 'payjp'
 
   def index
     @item = Item.find(params[:item_id])
   end
 
-  
-#   def create
-#     @transaction = Transaction.new(transaction_params)
-#     if @transaction.valid?
-#       pay_item
-#       @transaction.save
-#       return redirect_to root_path
-#     else
-#       render 'index'
-#     end
- 
-#   end
-
-#   private
-
-#   def transaction_params
-#     params.require(:transaction).permit(:post_number, :buyer_prefecture_id, :city, :adress, :phone_number, :builiding_name, :token).merge(user_id: current_user.id)
-#   end
-
-#   def pay_item
-#     Payjp.api_key = "sk_test_105f4f129491c3718b48ce7a"  # PAY.JPテスト秘密鍵
-#     Payjp::Charge.create(
-#       amount: @item.price,  # 商品の値段
-#       card: transaction_params[:token],    # カードトークン
-#       currency:'jpy'                 # 通貨の種類(日本円)
-#     )
-#   end
- 
-  def item_params
-    params.require(:item).permit(:text, :category_id, :price, :condition_id, :postage_id, :exhibitor_prefecture_id, :days_id).merge(user_id: current_user.id)
+  def new
+    # @transaction = Transaction.new
+    # @transaction = UserItem.new
   end
-end
+
+  def create
+    # binding.pry
+    @item = Item.find(params[:item_id])
+    @transaction = Transaction.new(transaction_params)
+    # @transaction = UserItem.new(transaction_params)
+    if @transaction.valid?
+      pay_item
+      @transaction.save
+      return redirect_to root_path
+    else
+      render 'index'
+    end
+  end
+
+  def show
+    @item = Item.find(params[:item_id])
+  end
+ 
+  private
+ 
+  def transaction_params
+    params.permit(:post_number, :buyer_prefecture_id, :city, :address, :building_name, :phone_number, :token, :authenticity_token, :item_id)
+  end
+ 
+  def pay_item
+    Payjp.api_key = "sk_test_105f4f129491c3718b48ce7a"  # PAY.JPテスト秘密鍵
+    Payjp::Charge.create(
+      amount: @item.price,  # 商品の値段
+      card: transaction_params[:token],    # カードトークン
+      currency:'jpy'                 # 通貨の種類(日本円)
+    )
+  end
+ 
+  def move_to_index
+    unless user_signed_in?
+      redirect_to new_user_session_path
+    end
+  end
+
+  def current_user
+    if user_signed_in? && current_user.id == @item.user_id
+      redirect_to root_path
+    end
+  end
+
+ end
+
+
+  # def create
+  #   @transaction = Transaction.new(price: order_params[:price])
+  #   if @transaction.valid?
+  #     pay_item
+  #     @transaction.save
+  #     return redirect_to root_path
+  #   else
+  #     render 'index'
+  #   end
+  # end
+
+  # # private
+
+  # # def transaction_params
+  # #   params.permit(:@item.price, :token)
+  # # end
+
+  # def pay_item
+  #   Payjp.api_key = "sk_test_105f4f129491c3718b48ce7a"  # PAY.JPテスト秘密鍵
+  #   Payjp::Charge.create(
+  #     Payjp::Charge.create(
+  #       amount: item_params[:price],  # 商品の値段
+  #       card: item_params[:token],    # カードトークン
+  #       currency:'jpy'                 # 通貨の種類(日本円)
+  #     )
+  #   end
+ 
+  
+  # end
+
+  # def index
+  # end
+ 
+  
