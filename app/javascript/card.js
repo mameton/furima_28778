@@ -16,8 +16,8 @@ const pay = () => {
       } else {
         window.alert("error");
       }
-    });
-  });
-};
+    };
+  ;
+;
 
 window.addEventListener("load", pay);
