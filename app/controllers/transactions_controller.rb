@@ -1,21 +1,19 @@
 class TransactionsController < ApplicationController
   before_action :move_to_index
+  before_action :seller
+  before_action :sold
   require 'payjp'
 
   def index
     @item = Item.find(params[:item_id])
-    # @transaction = Transaction.find(params[:item_id])
   end
 
   def new
-    # @transaction = Transaction.new
     @transaction = Payment.new
   end
 
   def create
-    # binding.pry
     @item = Item.find(params[:item_id])
-    # @transaction = Transaction.new(transaction_params)
     @transaction = Payment.new(transaction_params)
     if @transaction.valid?
        pay_item
@@ -37,11 +35,11 @@ class TransactionsController < ApplicationController
   end
  
   def pay_item
-    Payjp.api_key = "sk_test_105f4f129491c3718b48ce7a"  # PAY.JPテスト秘密鍵
+    Payjp.api_key = "sk_test_105f4f129491c3718b48ce7a"
     Payjp::Charge.create(
-      amount: @item.price,  # 商品の値段
-      card: transaction_params[:token],    # カードトークン
-      currency:'jpy'                 # 通貨の種類(日本円)
+      amount: @item.price,
+      card: transaction_params[:token],
+      currency:'jpy'
     )
   end
  
@@ -51,40 +49,18 @@ class TransactionsController < ApplicationController
     end
   end
 
- end
+  def seller
+    @item = Item.find(params[:item_id])
+    if current_user.id == @item.id
+      redirect_to root_path
+    end
+  end
 
+  def sold
+    @item = Item.find(params[:item_id])
+     if @item.pay != nil
+      redirect_to root_path
+    end
+  end
 
-  # def create
-  #   @transaction = Transaction.new(price: order_params[:price])
-  #   if @transaction.valid?
-  #     pay_item
-  #     @transaction.save
-  #     return redirect_to root_path
-  #   else
-  #     render 'index'
-  #   end
-  # end
-
-  # # private
-
-  # # def transaction_params
-  # #   params.permit(:@item.price, :token)
-  # # end
-
-  # def pay_item
-  #   Payjp.api_key = "sk_test_105f4f129491c3718b48ce7a"  # PAY.JPテスト秘密鍵
-  #   Payjp::Charge.create(
-  #     Payjp::Charge.create(
-  #       amount: item_params[:price],  # 商品の値段
-  #       card: item_params[:token],    # カードトークン
-  #       currency:'jpy'                 # 通貨の種類(日本円)
-  #     )
-  #   end
- 
-  
-  # end
-
-  # def index
-  # end
- 
-  
+end
