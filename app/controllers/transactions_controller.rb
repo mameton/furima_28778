@@ -1,24 +1,24 @@
 class TransactionsController < ApplicationController
   before_action :move_to_index
-  before_action :current_user
   require 'payjp'
 
   def index
     @item = Item.find(params[:item_id])
+    # @transaction = Transaction.find(params[:item_id])
   end
 
   def new
     # @transaction = Transaction.new
-    # @transaction = UserItem.new
+    @transaction = Payment.new
   end
 
   def create
     # binding.pry
     @item = Item.find(params[:item_id])
-    @transaction = Transaction.new(transaction_params)
-    # @transaction = UserItem.new(transaction_params)
+    # @transaction = Transaction.new(transaction_params)
+    @transaction = Payment.new(transaction_params)
     if @transaction.valid?
-      pay_item
+       pay_item
       @transaction.save
       return redirect_to root_path
     else
@@ -33,7 +33,7 @@ class TransactionsController < ApplicationController
   private
  
   def transaction_params
-    params.permit(:post_number, :buyer_prefecture_id, :city, :address, :building_name, :phone_number, :token, :authenticity_token, :item_id)
+    params.permit(:post_number, :buyer_prefecture_id, :city, :address, :building_name, :phone_number, :token, :authenticity_token, :item_id, :pay_id).merge(user_id: current_user.id)
   end
  
   def pay_item
@@ -48,12 +48,6 @@ class TransactionsController < ApplicationController
   def move_to_index
     unless user_signed_in?
       redirect_to new_user_session_path
-    end
-  end
-
-  def current_user
-    if user_signed_in? && current_user.id == @item.user_id
-      redirect_to root_path
     end
   end
 

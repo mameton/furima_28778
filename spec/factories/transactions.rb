@@ -6,7 +6,7 @@ FactoryBot.define do
     address                   { '蔵野町123' }
     building_name             { ' ' }
     phone_number              { '00000000000' }
-    item_id                   { '1' }
-    association :item
+    pay_id                    { '1' }
+    association :pay
   end
 end

@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all.order("created_at DESC")
+    @transactions = Transaction.all
   end
   
   def new
@@ -44,15 +45,15 @@ class ItemsController < ApplicationController
       end
     end
     
-    def pay
-      @item = Item.find(params[:id])
-      Payjp.api_key = "sk_test_105f4f129491c3718b48ce7a"  # PAY.JPテスト秘密鍵
-      Payjp::Charge.create(
-        amount: @item.price,  # 商品の値段
-        card: params['payjp-token'],   # カードトークン
-        currency:'jpy'                 # 通貨の種類(日本円)
-      )
-    end
+    # def pay
+    #   @item = Item.find(params[:id])
+    #   Payjp.api_key = "sk_test_105f4f129491c3718b48ce7a"  # PAY.JPテスト秘密鍵
+    #   Payjp::Charge.create(
+    #     amount: @item.price,  # 商品の値段
+    #     card: params['payjp-token'],   # カードトークン
+    #     currency:'jpy'                 # 通貨の種類(日本円)
+    #   )
+    # end
 
   private
 
