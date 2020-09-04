@@ -1,8 +1,10 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update]
 
+
   def index
     @items = Item.all.order("created_at DESC")
+    @transactions = Transaction.all
   end
   
   def new
@@ -40,7 +42,7 @@ class ItemsController < ApplicationController
         render :show
       end
     end
-
+    
   private
 
   def item_params

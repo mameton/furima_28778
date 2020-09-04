@@ -9,9 +9,11 @@
     <div class='item-img-content'>
       <%= image_tag @item.image , class:"item-box-img" %>
       <%# 商品が売れている場合は、sold outの表示をしましょう。 %>
+      <% if @item.pay != nil %>
       <div class='sold-out'>
         <span>Sold Out!!</span>
       </div>
+      <% end %>
       <%# //商品が売れている場合は、sold outの表示をしましょう。 %>
     </div>
 <div class="item-price-box">
@@ -45,19 +47,21 @@
         (税込) 送料込み
       </span>
     </div> %>
-
+    
+    <% unless user_signed_in? %>
+    <%= link_to '購入画面に進む', item_transactions_path(@item.id) ,class:"item-red-btn"%>
+    <% end %>
     <% if user_signed_in? && current_user.id == @item.user_id %>
     <%= link_to '商品の編集', edit_item_path(@item.id) , method: :get, class: "item-red-btn" %>
     <p class='or-text'>or</p>
     <%= link_to '削除', "#", method: :delete, class:'item-destroy' %>
     <% end %>
     <% if user_signed_in? && current_user.id != @item.user_id %>
-    <%= link_to '購入画面に進む', "#" ,class:"item-red-btn"%>
+    <%= link_to '購入画面に進む', item_transactions_path(@item.id) ,class:"item-red-btn"%>
     <% end %>
-    
 
     <div class="item-explain-box">
-      <span><%= "商品説明" %></span>
+      <span><%= @item.text %></span>
     </div>
     <table class="detail-table">
       <tbody>
