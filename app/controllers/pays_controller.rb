@@ -16,4 +16,5 @@ class PaysController < ApplicationController
 
   def pay_params
     params.permit(:user_id,:item_id)
+  end
 end
