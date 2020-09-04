@@ -23,10 +23,6 @@ class TransactionsController < ApplicationController
       render 'index'
     end
   end
-
-  def show
-    @item = Item.find(params[:item_id])
-  end
  
   private
  

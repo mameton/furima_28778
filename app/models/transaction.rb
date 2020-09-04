@@ -3,12 +3,10 @@ class Transaction < ApplicationRecord
   attr_accessor :authenticity_token
 
   belongs_to :pay
-  # belongs_to :user
-  # belongs_to :item
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :buyer_prefecture
 
-  validates :post_number, :buyer_prefecture, :city, :address, :phone_number, presence: true
+  validates :post_number, :buyer_prefecture, :city, :address, :phone_number, :token, presence: true
 
     validates :buyer_prefecture_id, numericality: { other_than: 1 }
 

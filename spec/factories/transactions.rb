@@ -8,5 +8,6 @@ FactoryBot.define do
     phone_number              { '00000000000' }
     pay_id                    { '1' }
     association :pay
+    token                     {'aaaaaaaaaaaaa'}
   end
 end

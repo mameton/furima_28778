@@ -60,6 +60,11 @@ describe Transaction do
         @transaction.valid?
         expect(@transaction.errors.full_messages).to include("Phone number is invalid")
       end
+      it 'tokenが空' do
+        @transaction.token = ''
+        @transaction.valid?
+        expect(@transaction.errors.full_messages).to include("Token can't be blank")
+      end
     end
   end
 end
