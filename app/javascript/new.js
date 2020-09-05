@@ -1,9 +1,4 @@
-// イベントの発火じょうけんを記述
-//item-priceを取得→定数にいれる
-// const test = item-price
-// item-priceに値が入力されたらイベントが発火する
-// item-priceの値を取得→メソッド
-window.addEventListener('load', function(){
+window.addEventListener('input', function(){
 const fee = document.getElementById("item-price")
 fee.addEventListener('input', function(){
     const price = document.getElementById('item-price').value
