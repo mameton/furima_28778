@@ -1,5 +1,21 @@
 const pay = () => {
-  Payjp.setPublicKey("pk_test_bebee9b304e4028c69a9cbf0"); // PAY.JPテスト公開鍵
+  Payjp.setPublicKey("pk_test_bebee9b304e4028c69a9cbf0");　// PAY.JPテスト公開鍵
+  const form = document.getElementById("charge-form");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formResult = document.getElementById("charge-form");
+    const formData = new FormData(formResult);
+
+    const card = {
+      number: formData.get("number"),
+      cvc: formData.get("cvc"),
+      exp_month: formData.get("exp_month"),
+      exp_year: `20${formData.get("exp_year")}`,
+    };
+    console.log(card)
+    Payjp.createToken(card, (status, response) => {
+      console.log(status)
       if (status === 200) {
         const token = response.id;
         const renderDom = document.getElementById("charge-form");
@@ -14,10 +30,10 @@ const pay = () => {
         document.getElementById("charge-form").submit();
         document.getElementById("charge-form").reset();
       } else {
-        // window.alert("error");
+        window.alert("error");
       }
-    };
-  ;
-;
+    });
+  });
+};
 
 window.addEventListener("load", pay);
