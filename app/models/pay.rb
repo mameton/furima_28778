@@ -3,5 +3,5 @@ class Pay < ApplicationRecord
 
   has_one :trade, class_name:"Transaction"
   belongs_to :user
-  belongs_to :item ,dependent: :destroy
+  belongs_to :item
 end

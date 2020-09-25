@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  has_one :pay
+  has_one :pay , dependent: :destroy
   belongs_to :user
   has_one_attached :image
   attr_accessor :token
